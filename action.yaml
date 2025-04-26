@@ -1,9 +1,9 @@
 name: NPM dependencies cache key
-description: Generates cache key for the npm-run-script action, under which dependencies (e.g. node_modules and additional paths) are stored.
+description: Generate cache key for the npm-run-script action, under which dependencies (e.g. node_modules and additional paths) are stored.
 
 inputs:
   working-directory:
-    description: The directory which contains the '**/package-lock.json' files
+    description: The working directory which contains the '**/package-lock.json' files
     default: '.'
 
 outputs:
