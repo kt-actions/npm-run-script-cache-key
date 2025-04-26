@@ -1,23 +1,22 @@
-name: Template
-description: 'Template for creating new actions'
+name: NPM dependencies cache key
+description: Generates cache key for the npm-run-script action, under which dependencies (e.g. node_modules and additional paths) are stored.
 
 inputs:
-  name:
-    description: 'Your name'
-    required: true
-    default: 'World'
+  working-directory:
+    description: The directory which contains the '**/package-lock.json' files
+    default: '.'
 
 outputs:
-  greeting:
-    description: 'The greeting message'
-    value: ${{ steps.hello.outputs.message }}
+  key:
+    description: The generated cache key
+    value: ${{ steps.cache-key.outputs.key }}
 
 runs:
   using: 'composite'
   steps:
-    - run: echo "message='Hello ${{ inputs.name }}'" >> "$GITHUB_OUTPUT"
+    - id: cache-key
+      run: echo "cache-key=node-cache-dependencies-${{ runner.os }}-${{ runner.arch }}-npm-${{ steps.setup-node.outputs.node-version }}-${{ hashFiles(format('{0}/**/package-lock.json', inputs.working-directory)) }}" >> $GITHUB_OUTPUT
       shell: bash
-      id: hello
 
-    - run: echo "Hello ${{ steps.hello.outputs.message }}"
+    - run: 'echo "Generated cache key: ${{ steps.cache-key.outputs.key }}"'
       shell: bash
