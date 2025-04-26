@@ -15,7 +15,7 @@ runs:
   using: 'composite'
   steps:
     - id: cache-key
-      run: echo "cache-key=node-cache-dependencies-${{ runner.os }}-${{ runner.arch }}-npm-${{ steps.setup-node.outputs.node-version }}-${{ hashFiles(format('{0}/**/package-lock.json', inputs.working-directory)) }}" >> $GITHUB_OUTPUT
+      run: echo "key=node-cache-dependencies-${{ runner.os }}-${{ runner.arch }}-npm-${{ steps.setup-node.outputs.node-version }}-${{ hashFiles(format('{0}/**/package-lock.json', inputs.working-directory)) }}" >> $GITHUB_OUTPUT
       shell: bash
 
     - run: 'echo "Generated cache key: ${{ steps.cache-key.outputs.key }}"'
